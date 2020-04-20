@@ -1,3 +1,5 @@
+To build cassandra docker image
+
 1)sudo apt update
 2)sudo apt install docker.io
 3)sudo docker pull cassandra:latest
@@ -17,22 +19,28 @@ WITH DELIMITER=',' AND HEADER=FALSE;
 
 Queries 
 
-15)DELETE from spotify.statistics where song='Aleluya (En La Tierra)';
-16)INSERT into spotify.statistics(song,artist,date,uri) values ('Ha_cara','Cara','10-10-2020','spotify:album:cara');
-17)UPDATE spotify.statistics set artist= 'cara_new' where song = 'Ha_cara';
+1)DELETE from spotify.statistics where song='Aleluya (En La Tierra)';
+2)INSERT into spotify.statistics(song,artist,date,uri) values ('Ha_cara','Cara','10-10-2020','spotify:album:cara');
+3)UPDATE spotify.statistics set artist= 'cara_new' where song = 'Ha_cara';
 
-Curl
+Curl requests
 
-curl -i -H "Content-Type: application/json" -X POST -d '{"song":"Ha_cara1","artist":"cara","date":"10-10-2020","uri":"spotify:album:cara"}' http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_create
-curl -X "DELETE" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_delete/Ha_cara1
-curl -X "PUT" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_update/Ha_cara1
+1)curl -i -H "Content-Type: application/json" -X POST -d '{"song":"Ha_cara1","artist":"cara","date":"10-10-2020","uri":"spotify:album:cara"}' http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_create
+2)curl -X "DELETE" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_delete/Ha_cara1
+3)curl -X "PUT" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_update/Ha_cara1
 
 Kubertnetes
 
-sudo kubectl scale deployment coursework --replicas=3
+sudo snap install microk8s --classic
+sudo microk8s.status
+sudo microk8s.kubectl get nodes
+sudo snap alias microk8s.kubectl kubectl
+sudo kubectl get nodes
+sudo snap list
 sudo kubectl create deployment coursework --image=cassandrarest:v1
-sudo kubectl run coursework --image=cassandrarest:v1 --port=8080
-sudo kubectl expose deployment coursework --type=LoadBalancer --name=coursework --port=8080
+sudo kubectl run coursework --image=cassandrarest:v1 --port=80
+sudo kubectl scale deployment coursework --replicas=3
+sudo kubectl expose deployment coursework --type=LoadBalancer --name=coursework --port=80
 sudo kubectl patch service coursework -p '{"spec": {"type": "LoadBalancer", "externalIPs":["54.172.5.180"]}}'
 sudo kubectl get all
 sudo kubectl delete deployment.apps/coursework
