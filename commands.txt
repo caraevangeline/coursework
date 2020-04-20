@@ -1,0 +1,38 @@
+1)sudo apt update
+2)sudo apt install docker.io
+3)sudo docker pull cassandra:latest
+4)sudo docker run --name coursework -p 9042:9042 -d cassandra:latest
+5)sudo docker cp spotify.csv coursework:/home/spotify.csv
+6)sudo docker exec -it coursework cqlsh
+7)CREATE KEYSPACE spotify WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1};
+8)CREATE TABLE spotify.statistics (artist text,song text PRIMARY KEY, date text, uri text);
+9)COPY spotify.statistics(artist,song,date,uri)
+FROM '/home/spotify.csv'
+WITH DELIMITER=',' AND HEADER=FALSE;
+10)select * from spotify.statistics where artist='Elevation Worship' ALLOW FILTERING;
+11)select artist from spotify.statistics where song='The Blessing (Live)' ALLOW FILTERING;
+12)sudo docker inspect coursework
+13)sudo docker build . --tag=cassandrarest:v1
+14)sudo docker run -p 80:80 cassandrarest:v1
+
+Queries 
+
+15)DELETE from spotify.statistics where song='Aleluya (En La Tierra)';
+16)INSERT into spotify.statistics(song,artist,date,uri) values ('Ha_cara','Cara','10-10-2020','spotify:album:cara');
+17)UPDATE spotify.statistics set artist= 'cara_new' where song = 'Ha_cara';
+
+Curl
+
+curl -i -H "Content-Type: application/json" -X POST -d '{"song":"Ha_cara1","artist":"cara","date":"10-10-2020","uri":"spotify:album:cara"}' http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_create
+curl -X "DELETE" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_delete/Ha_cara1
+curl -X "PUT" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_update/Ha_cara1
+
+Kubertnetes
+
+sudo kubectl scale deployment coursework --replicas=3
+sudo kubectl create deployment coursework --image=cassandrarest:v1
+sudo kubectl run coursework --image=cassandrarest:v1 --port=8080
+sudo kubectl expose deployment coursework --type=LoadBalancer --name=coursework --port=8080
+sudo kubectl patch service coursework -p '{"spec": {"type": "LoadBalancer", "externalIPs":["54.172.5.180"]}}'
+sudo kubectl get all
+sudo kubectl delete deployment.apps/coursework
