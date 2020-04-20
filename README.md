@@ -48,11 +48,21 @@ Mini Project on REST services. The following functionalities are performed
  - currently_playing - To get the details of the currently_playing track
  ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig1.jpg)
  - cover_image/<play_id> - To get the cover image of the play_id
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig2.png)
  - recommendations - To the genre recommendations for the user
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig3.jpg)
  - create_playlist/<user_id> - Create a playlist for the user (user_id)
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig4.png)
+![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig13.jpg)
  - add_tracks/<playlist_id> - Add tracks to playlist_id
+ -![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig5.png)
+![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig14.jpg)
  - save_album/<album_id> - Save album with id = album_id to the user's account
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig6.png)
+![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig15.jpg)
  - unfollow_artist/<artist_id> - Unfollow the artist with id = artist_id
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig7.png)
+![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig16.jpg)
   
 ### Create database for cassandra
  
@@ -98,18 +108,22 @@ programs/cw1.py contains the combined code to process both cassandra database re
    ```
   The above commands are to build an image and to run the requests desired. 
   - To see the GET request open https://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_display/<song_name>
+![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig8.png) 
   - To process POST, type the below command in another terminal
   ```sh
    $ curl -i -H "Content-Type: application/json" -X POST -d '{"song":"Ha_cara1","artist":"cara","date":"10-10-2020","uri":"spotify:album:cara"}' http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_create
    ```
+   ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig9.jpg)
   - To process PUT, give the below command from another terminal
    ```sh
    $ curl -X "PUT" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_update/Ha_cara
    ```
+   ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig11.jpg)
    - For DELETE,
    ```sh
    $ curl -X "DELETE" http://ec2-54-172-5-180.compute-1.amazonaws.com/spotify_delete/Ha_cara
    ```
+   ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig10.jpg)
  ### Kubertnetes for load balancing
 
 
@@ -133,6 +147,8 @@ $ sudo kubectl scale deployment coursework --replicas=3
 $ sudo kubectl expose deployment coursework --type=LoadBalancer --name=coursework --port=80
 $ sudo kubectl patch service coursework -p '{"spec": {"type": "LoadBalancer", "externalIPs":["54.172.5.180"]}}'
 ```
+![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig12.png)
+
 To view or delete Deployment
 ```sh
 $ sudo kubectl get all
@@ -140,7 +156,6 @@ $ sudo kubectl delete deployment.apps/coursework
 $ sudo kubectl delete pod/coursework
 $ sudo kubectl delete service/coursework
 ```
-
 
 
 
