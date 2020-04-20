@@ -11,6 +11,7 @@ def hello():
     name = request.args.get("name","World")
     return('<h1>Hello, {}!</h1>'.format(name))
 
+#---------------To display the artist of the specified song---------------#
 @app.route('/spotify_display/<song>')
 def display(song):
     rows = session.execute( """Select * From spotify.statistics where song = '{}'""".format(song))
@@ -19,6 +20,7 @@ def display(song):
 
     return 'Song does not exist!'
 
+#---------------To create a new record---------------#
 @app.route('/spotify_create',methods = ["GET","POST"])
 def create():
     song = request.json.get('song', '')
@@ -28,11 +30,13 @@ def create():
     rows = session.execute( """Insert into spotify.statistics(song,artist,date,uri) values ('{}','{}','{}','{}')""".format(song,artist,date,uri))
     return 'Added Successfully'
 
+#---------------To delete a record---------------#
 @app.route('/spotify_delete/<song>',methods = ["GET","DELETE"])
 def del_spotify(song):
     rows = session.execute( """Delete from spotify.statistics where song = '{}'""".format(song))
     return 'Deleted Successfully'
 
+#---------------To update the artist name of a given song---------------#
 @app.route('/spotify_update/<artist>',methods = ["GET","PUT"])
 def update_spotify(artist):
     rows = session.execute( """UPDATE spotify.statistics set artist= 'cara' where song = '{}'""".format(artist))
@@ -40,6 +44,7 @@ def update_spotify(artist):
 
 access_token = 'BQDZFBVSHbt6ZzHwb0eGUOxQR7HHny58ZlXva3Bye2OtwWy9ux6jAONPV9rgAQpugO6ULQxOtHvRQ88fdPnKzem8ul3WmBEr_StztQDzF0h-EkXu0g9IITniJRqpHrAdzqqYEzy_QUKoVvosKZqrpE5UNtCz1I2MNZ0APxoLGADjrNCzw827UAi0BykhUljZNpibb-M1KgaX0pW8_8jJvF-Ywm_J4A6qK5Tj71ki2LV-uHb38wc2CqtDDK-pYK5zxdAmoovY6uXgvqfCK99T9uf2gHCIqA'
 
+#---------------To get the details of currently_playing track---------------#
 @app.route('/currently_playing', methods=['GET'])
 def currently_playing_f():
     currently_playing = 'https://api.spotify.com/v1/me/player/currently-playing?access_token=' + access_token
@@ -51,6 +56,7 @@ def currently_playing_f():
     else:
         print(resp.reason)
 
+#---------------To get the cover image of a specified playlist---------------#
 @app.route('/cover_image/<play_id>', methods=['GET'])
 def cover_image_f(play_id):
     #play_id = '3y35YGWmp1VVD8vsSOIR4D'
@@ -63,6 +69,7 @@ def cover_image_f(play_id):
     else:
        print(resp.reason)
 
+#---------------To get the recommendation genres for the user---------------#
 @app.route('/recommendations', methods=['GET'])
 def recommendations_f():
     recommendations = 'https://api.spotify.com/v1/recommendations/available-genre-seeds?access_token=' + access_token
@@ -73,6 +80,7 @@ def recommendations_f():
     else:
        print(resp.reason)
 
+#---------------To create a playlist for the user---------------#
 @app.route('/create_playlist/<user_id>', methods=["GET","POST"])
 def create_playlist_f(user_id):
     #user_id = "dzg5zlif6tsiu0n5v9cnln2di"
@@ -83,6 +91,7 @@ def create_playlist_f(user_id):
     else:
        print(resp.reason)
 
+#---------------To add track to the specified playlist---------------#
 @app.route('/add_tracks/<playlist_id>', methods=["GET","POST"])
 def add_tracks_f(playlist_id):
     #playlist_id = "4jx77EWucvBRyPY8eyseXo"
@@ -94,6 +103,7 @@ def add_tracks_f(playlist_id):
     else:
        print(resp.reason)
 
+#---------------To save an album for the user---------------#
 @app.route('/save_album/<album_id>', methods=["GET","PUT"])
 def save_album_f(album_id):
     #album_id = "3n4DOUwVf6CSlW8zbjPGdW"
@@ -104,6 +114,7 @@ def save_album_f(album_id):
     else:
        print(resp.reason)
 
+#---------------To unfollow an artist---------------#
 @app.route('/unfollow_artist/<artist_id>', methods=["GET","DELETE"])
 def unfollow_artist_f(artist_id):
     #artist_id = "3Nrfpe0tUJi4K4DXYWgMUX"

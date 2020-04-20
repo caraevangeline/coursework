@@ -3,11 +3,11 @@ import json
 import requests
 import requests_cache
 import urllib.request
-#from flask_restful import Resource
-#requests_cache.install_cache('crime_api_cache', backend='sqlite', expire_after=36000)
+
 app = Flask(__name__)
 access_token = 'BQCW8FmZ5ofgu8Cjnh4xA-jLKbNrgWA4YzoPC68xw48lXll7a_NsbCCJSdILRvoMnWEym_ZRQSLutyszD3Xa6RrV4FPBXWFHZOVpmctEruecZWYjRihTGBHnJQc9X1SROV9gpe1DWggFw8btVInTnq5CeQ6FaBCO0roqBT2PeB6vYNPaUeOxlvT36yhTA5ckUKXXH5-ta1CJ8mJYgxnMOMT3wEvVbmJbE-dQbzMEkU99kli7zkJfD0utm_R8pgn2u-4-TwpYW4W0sfHC9gSLT_wbLvgv8A'
 
+#---------------To get the details of currently_playing track---------------#
 @app.route('/currently_playing', methods=['GET'])
 def currently_playing_f():
     currently_playing = 'https://api.spotify.com/v1/me/player/currently-playing?access_token=' + access_token
@@ -19,6 +19,7 @@ def currently_playing_f():
     else:
         print(resp.reason)
 
+#---------------To get the cover image of a specified playlist---------------#
 @app.route('/cover_image/<play_id>', methods=['GET'])
 def cover_image_f(play_id):
     #play_id = '3y35YGWmp1VVD8vsSOIR4D'
@@ -31,6 +32,7 @@ def cover_image_f(play_id):
     else:
        print(resp.reason)
 
+#---------------To get the recommendation genres for the user---------------#
 @app.route('/recommendations', methods=['GET'])
 def recommendations_f():
     recommendations = 'https://api.spotify.com/v1/recommendations/available-genre-seeds?access_token=' + access_token
@@ -41,6 +43,7 @@ def recommendations_f():
     else:
        print(resp.reason)
 
+#---------------To create a playlist for the user---------------#
 @app.route('/create_playlist/<user_id>', methods=["GET","POST"])
 def create_playlist_f(user_id):
     #user_id = "dzg5zlif6tsiu0n5v9cnln2di"
@@ -52,6 +55,7 @@ def create_playlist_f(user_id):
     else:
        print(resp.reason)
 
+#---------------To add track to the specified playlist---------------#
 @app.route('/add_tracks/<playlist_id>', methods=["GET","POST"])
 def add_tracks_f(playlist_id):
     #playlist_id = "1KfSKyY3wIXWzHSO0KfRiH"
@@ -63,25 +67,28 @@ def add_tracks_f(playlist_id):
     else:
        print(resp.reason)
 
+#---------------To save an album for the user---------------#
 @app.route('/save_album/<album_id>', methods=["GET","PUT"])
 def save_album_f(album_id):
     #album_id = "3n4DOUwVf6CSlW8zbjPGdW"
     save_album = 'https://api.spotify.com/v1/me/albums?ids=' + album_id +'&access_token=' + access_token
     resp = requests.put(url = save_album)
     if resp.ok:
-       return 'Success'
+       return 'Successfully saved an album'
     else:
        print(resp.reason)
 
+#---------------To unfollow an artist---------------#
 @app.route('/unfollow_artist/<artist_id>', methods=["GET","DELETE"])                                                                                                                        @app.route('/unfollow_artist/<artist_id>', methods=["GET","DELETE"])
 def unfollow_artist_f(artist_id):
     #artist_id = "3Nrfpe0tUJi4K4DXYWgMUX"
     unfollow_artist = 'https://api.spotify.com/v1/me/following?type=artist&ids=' + artist_id + '&access_token=' + access_token
     resp = requests.delete(url = unfollow_artist)
     if resp.ok:
-       return 'Success'
+       return 'The specified artist is unfollowed'
     else:
        print(resp.reason)
 
+#--------------Application served over HTTPS using adhoc certificate--------#
 if __name__=="__main__":
     app.run(host='0.0.0.0', ssl_context='adhoc')
