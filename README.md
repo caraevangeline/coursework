@@ -46,6 +46,7 @@ Mini Project on REST services. The following functionalities are performed
  
   Go to https://ec2-54-172-5-180.compute-1.amazonaws.com/{..} to observe the outputs of the created app. Below are the urls of requests served.
  - currently_playing - To get the details of the currently_playing track
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig1.jpg)
  - cover_image/<play_id> - To get the cover image of the play_id
  - recommendations - To the genre recommendations for the user
  - create_playlist/<user_id> - Create a playlist for the user (user_id)
