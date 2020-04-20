@@ -29,7 +29,7 @@ Mini Project on REST services. The following functionalities are performed
   - Once the request is processed succesfully, you will be redirected to a webpage.
   - GET requests leads to HTML webpages -- programs/templates/.. contains the HTML files.
   - PUT, POST and DELETE requests are processed via GET requests explicitly and they show a success message.
-  - app.run(host='0.0.0.0', ssl_context='adhoc') is used to run the Flask application where 'adhoc' certificates are used run the app over HTTPS.
+  - app.run(host='0.0.0.0', ssl_context='adhoc') is used to run the Flask application where 'adhoc' certificates are used to run the app over HTTPS.
 
 
   Once you login into amazon EC2 t2.medium instance
@@ -56,7 +56,7 @@ Mini Project on REST services. The following functionalities are performed
  ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig4.png)
 ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig13.jpg)
  - add_tracks/<playlist_id> - Add tracks to playlist_id
- -![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig5.png)
+ ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig5.png)
 ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig14.jpg)
  - save_album/<album_id> - Save album with id = album_id to the user's account
  ![Image](https://raw.githubusercontent.com/caraevangeline/coursework/master/images/Fig6.png)
@@ -84,7 +84,7 @@ $ sudo docker pull cassandra:latest
 $ sudo docker run --name coursework -p 9042:9042 -d cassandra:latest
 $ sudo docker cp spotify.csv coursework:/home/spotify.csv
 $ sudo docker exec -it coursework cqlsh
-cqlsh>CREATE KEYSPACE spotify WITH REPLICATION = {'class' : 'SimpleStrategy',       .....'replication_factor' : 1};
+cqlsh>CREATE KEYSPACE spotify WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1};
 cqlsh>CREATE TABLE spotify.statistics (artist text,song text PRIMARY KEY, 
  .....date text,uri text);
 cqlsh>COPY spotify.statistics(artist,song,date,uri)
@@ -133,7 +133,7 @@ programs/cw1.py contains the combined code to process both cassandra database re
 
 
 > Containers are a good way to bundle and run your applications. In a production environment, you need to manage the containers that run the applications and ensure that there is no downtime. For example, if a container goes down, another container needs to start. Wouldn’t it be easier if this behavior was handled by a system?
-That’s how Kubernetes comes to the rescue! Kubernetes provides you with a framework to run distributed systems resiliently. It takes care of scaling and failover for your application, provides deployment patterns, and more. For example, Kubernetes can easily manage a canary deployment for your system.
+That’s how Kubernetes comes to the rescue! Kubernetes provides you with a framework to run distributed systems resiliently. It takes care of scaling and failover for your application, provides deployment patterns, and more. 
 
 Below commands are to install microk8s to run kubernetes and to check status
 ```sh
